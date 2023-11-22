@@ -20,7 +20,7 @@ public class ChatListener implements Listener {
         put("o/","(ﾟ◡ﾟ)/");
         put(":pi:","π");
     }};
-
+    //d
     public ChatListener(Handler handler){
         this.handler = handler;
     }
