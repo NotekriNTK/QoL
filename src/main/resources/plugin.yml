@@ -1,0 +1,4 @@
+name: QoL
+version: '${project.version}'
+main: dk.notekri.qol.QoL
+api-version: '1.20'
