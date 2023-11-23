@@ -19,10 +19,9 @@ public class InfoCmds implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] strings) {
-        if (!(sender instanceof Player)){
-            sender.sendMessage("Must be a player to execute this command!");
-        }
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) sender.sendMessage("Must be a player to execute this command!");
+        assert sender instanceof Player;
         Player player = (Player)sender;
 
         if (label.equalsIgnoreCase("rules") || label.equalsIgnoreCase("regler")){
@@ -30,8 +29,28 @@ public class InfoCmds implements CommandExecutor {
         }
 
         if (label.equalsIgnoreCase("slimechunk")){
-            String msg="§cDet er ikke en slimechunk";if (player.getLocation().getChunk().isSlimeChunk()){msg="§aDet er en slimechunk";}
+            String msg="§cNot a slimechunk";if (player.getLocation().getChunk().isSlimeChunk()){msg="§aIt is a slimechunk";}
             player.sendMessage(msg);
+        }
+        if (label.equalsIgnoreCase("slimemap")){
+            //  Check that it contains the correct amount of args.
+            if (args.length != 0){
+                player.sendMessage("§cWrong usage, try - /slimemap");
+                return true;
+            }
+
+            /*int size;//   Not using this anymore.
+            //  Avoid exception when wrong input type is given.
+            try{
+                size = Integer.parseInt(args[0]);
+            }catch(NumberFormatException exception){
+                player.sendMessage("§cSize must be a number");
+                return true;
+            }*/
+
+            player.sendMessage("§7Slime Chunks around you:");
+
+            player.sendMessage(CmdsUtility.getSlimeMap(player.getLocation(), 7));
         }
 
         return true;
@@ -41,5 +60,6 @@ public class InfoCmds implements CommandExecutor {
     private void setup(){
         main.getServer().getPluginCommand("rules").setExecutor(this);
         main.getServer().getPluginCommand("slimechunk").setExecutor(this);
+        main.getServer().getPluginCommand("slimemap").setExecutor(this);
     }
 }

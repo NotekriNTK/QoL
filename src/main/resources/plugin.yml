@@ -5,7 +5,10 @@ api-version: '1.20'
 commands:
   rules:
     aliases: [regler]
-    usage: /command
+    usage: /<command>
   slimechunk:
-    usage: /command
+    usage: /<command>
     description: Tells whether or not the chunk you're standing in is a slimechunk.
+  slimemap:
+    usage: /<command>
+    description: Gives you a 7x7 map around you of slimechunks.

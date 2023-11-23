@@ -16,29 +16,33 @@ import java.util.Map;
 public class ChatListener implements Listener {
 
     private Handler handler;
-    private static HashMap<String,String> replacementMap = new HashMap<String,String>(){{
+    private static final HashMap<String,String> replacementMap = new HashMap<String,String>(){{
         put("&","§");
         put(":shrug:","¯\\_(ツ)_/¯");
         put("o/","(ﾟ◡ﾟ)/");
         put(":pi:","π");
         put("<3","❤");
+        put(":skull:","☠");
     }};
     public ChatListener(Handler handler){
         this.handler = handler;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerConnect(PlayerJoinEvent event){
         String name = event.getPlayer().getName();
         event.setJoinMessage("§8[§2+§8] §a"+name);
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerDisconnect(PlayerQuitEvent event){
         String name = event.getPlayer().getName();
         event.setQuitMessage("§8[§4+§8] §c"+name);
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onChatEvent(PlayerChatEvent event){
         String message = event.getMessage();
