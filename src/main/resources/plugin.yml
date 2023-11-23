@@ -2,3 +2,10 @@ name: QoL
 version: '${project.version}'
 main: dk.notekri.qol.QoL
 api-version: '1.20'
+commands:
+  rules:
+    aliases: [regler]
+    usage: /command
+  slimechunk:
+    usage: /command
+    description: Tells whether or not the chunk you're standing in is a slimechunk.
