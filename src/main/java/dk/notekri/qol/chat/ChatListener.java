@@ -4,11 +4,13 @@ import dk.notekri.qol.core.Handler;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
+import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,16 +41,24 @@ public class ChatListener implements Listener {
     @EventHandler
     public void onPlayerDisconnect(PlayerQuitEvent event){
         String name = event.getPlayer().getName();
-        event.setQuitMessage("§8[§4+§8] §c"+name);
+        event.setQuitMessage("§8[§4-§8] §c"+name);
     }
 
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onChatEvent(PlayerChatEvent event){
+
         String message = event.getMessage();
+
+        //  Change the message by replacing emojis and symbols.
         for (Map.Entry<String,String> pair : replacementMap.entrySet()){message = message.replace(pair.getKey(), pair.getValue());}
+
+        Player player = event.getPlayer();
+        ChatColor nameColor = ChatUtility.getPlayerNameColour(player, ChatColor.GRAY);
+
+        //  Change message and formatting
         event.setMessage(message);
-        event.setFormat("§7%1$s §8>> §7%2$s");
+        event.setFormat(nameColor+"%1$s §8>> §7%2$s");
     }
 
 }

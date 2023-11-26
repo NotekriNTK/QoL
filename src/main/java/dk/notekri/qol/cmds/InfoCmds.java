@@ -1,16 +1,25 @@
 package dk.notekri.qol.cmds;
 
 import dk.notekri.qol.QoL;
+import dk.notekri.qol.chat.ChatUtility;
 import dk.notekri.qol.core.Handler;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class InfoCmds implements CommandExecutor {
 
     private QoL main;
     private Handler handler;
+
+    //  Key: Player that is responding, Value: Player that last messaged the responder.
+    private HashMap<UUID,UUID> lastMessageMap = new HashMap<>();
 
     public InfoCmds(Handler handler){
         this.handler = handler;
@@ -39,19 +48,31 @@ public class InfoCmds implements CommandExecutor {
                 return true;
             }
 
-            /*int size;//   Not using this anymore.
-            //  Avoid exception when wrong input type is given.
-            try{
-                size = Integer.parseInt(args[0]);
-            }catch(NumberFormatException exception){
-                player.sendMessage("§cSize must be a number");
-                return true;
-            }*/
-
             player.sendMessage("§7Slime Chunks around you:");
 
             player.sendMessage(CmdsUtility.getSlimeMap(player.getLocation(), 7));
         }
+        /*
+        if (label.equalsIgnoreCase("w")||label.equalsIgnoreCase("whisper")||label.equalsIgnoreCase("msg")||label.equalsIgnoreCase("message")){
+            if (args.length != 2){
+                player.sendMessage("§cWrong usage, try - /msg <playername>");
+                return true;
+            }
+            Player recipient = Bukkit.getPlayer(args[0]);
+            String recipientName = recipient.getName();
+            String message = args[1];
+            if (recipient == null){
+                player.sendMessage("§cThe player is not online.");
+                return true;
+            }
+            ChatColor recipientColor = ChatUtility.getPlayerNameColour(recipient, ChatColor.GRAY);
+            ChatColor playerColor    = ChatUtility.getPlayerNameColour(player, ChatColor.GRAY);
+            player.sendMessage(playerColor+"You §7-> "+recipientColor+recipientName+" §7 >> "+message);
+            recipient.sendMessage(playerColor+player.getName()+" §7-> "+recipientColor+"You §7 >> "+message);
+        }
+        if (label.equalsIgnoreCase("r")||label.equalsIgnoreCase("respond")){
+
+        }*/
 
         return true;
     }
@@ -61,5 +82,7 @@ public class InfoCmds implements CommandExecutor {
         main.getServer().getPluginCommand("rules").setExecutor(this);
         main.getServer().getPluginCommand("slimechunk").setExecutor(this);
         main.getServer().getPluginCommand("slimemap").setExecutor(this);
+        //main.getServer().getPluginCommand("msg").setExecutor(this);
+        //main.getServer().getPluginCommand("respond").setExecutor(this);
     }
 }
